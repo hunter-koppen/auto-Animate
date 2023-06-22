@@ -13,79 +13,83 @@ export class AnimationContainer extends Component {
     };
 
     componentDidMount() {
-        this.setupAnimations(); // Initial setup
+        this.setupAnimations();
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.enabledAnimations !== this.props.enabledAnimations || prevState.loaded !== this.state.loaded) {
-            this.setupAnimations(); // Update animations
+            this.setupAnimations();
         }
     }
 
     componentWillUnmount() {
-        this.removeAnimations(); // Clean up animations
+        this.removeAnimations();
     }
 
     setupAnimations() {
         const { enabledAnimations, animationTiming, duration, shouldAnimateOnLoad } = this.props;
         const element = this.parentRef.current;
 
-        if (enabledAnimations) {
-            debugger;
-            if (element) {
-                if (this.state.loaded || shouldAnimateOnLoad) {
-                    if (!this.animationController) {
-                        let easing;
-                        switch (animationTiming) {
-                            case "easeInOut":
-                                easing = "ease-in-out";
-                                break;
-                            case "easeIn":
-                                easing = "ease-in";
-                                break;
-                            case "easeOut":
-                                easing = "ease-out";
-                                break;
-                            case "linear":
-                                easing = "linear";
-                                break;
-                            default:
-                                easing = "ease-in-out";
-                        }
-                        this.animationController = autoAnimate(element, {
-                            duration,
-                            easing
-                        });
-                    } else {
-                        this.animationController.enable(); // Re-enable animations
-                    }
+        if (!element) return;
+
+        // Make sure to only execute logic when we have a value for enabledAnimations (not undefined)
+        if (enabledAnimations === false) {
+            this.removeAnimations();
+            this.setState({ loaded: true });
+            return;
+        }
+
+        if (enabledAnimations === true) {
+            if (this.state.loaded || shouldAnimateOnLoad) {
+                let easing;
+                switch (animationTiming) {
+                    case "easeInOut":
+                        easing = "ease-in-out";
+                        break;
+                    case "easeIn":
+                        easing = "ease-in";
+                        break;
+                    case "easeOut":
+                        easing = "ease-out";
+                        break;
+                    case "linear":
+                        easing = "linear";
+                        break;
+                    default:
+                        easing = "ease-in-out";
                 }
 
-                if (!this.loaded) {
-                    this.setState({
-                        loaded: true
+                if (!this.animationController) {
+                    this.animationController = autoAnimate(element, {
+                        duration,
+                        easing
                     });
+                } else {
+                    this.animationController.enable();
                 }
             }
-        } else if (enabledAnimations === false) {
-            this.removeAnimations();
-            this.setState({
-                loaded: true
-            });
+
+            if (!this.state.loaded) {
+                this.setState({ loaded: true });
+            }
         }
     }
 
     removeAnimations() {
-        if (this.parentRef.current && this.animationController) {
+        if (this.animationController) {
             this.animationController.disable(); // Disable animations
             this.animationController = null; // Reset the animation controller
         }
     }
 
     render() {
+        const { content } = this.props;
+        const { loaded } = this.state;
+        // we only load the content once we have done the initial loading because then we have had time to apply the animations before loading the content if nessecary
+
         return (
             <div ref={this.parentRef} className="widget-auto-animate">
-                {this.state.loaded ? this.props.content : null}
+                {loaded && content}
             </div>
         );
     }
