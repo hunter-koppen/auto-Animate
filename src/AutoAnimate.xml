@@ -4,17 +4,30 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../node_modules/mendix/custom_widget.xsd">
     <name>Auto Animate</name>
     <description/>
-    <icon/>
     <properties>
-        <propertyGroup caption="General">
-            <property key="sampleText" type="string" required="false">
-                <caption>Default value</caption>
-                <description>Sample text input</description>
-            </property>
-            <property key="content" type="widgets" required="false">
-                <caption>Content</caption>
-                <description>Content inside the bottom sheet</description>
-            </property>
+        <propertyGroup caption="Settings">
+            <propertyGroup caption="Duration">
+                <property key="duration" type="integer" defaultValue="250">
+                    <caption>Duration</caption>
+                    <description>Animation duration in milliseconds</description>
+                </property>
+            </propertyGroup>
+            <propertyGroup caption="Timing">
+                <property key="animationTiming" type="enumeration" defaultValue="easeInOut">
+                    <caption>Animation Timing</caption>
+                    <description>How would like the timing of the animation to take place?</description>
+                    <enumerationValues>
+                        <enumerationValue key="easeInOut">Ease in-out (Slow start and slow end)</enumerationValue>
+                        <enumerationValue key="easeIn">Ease in (slow start)</enumerationValue>
+                        <enumerationValue key="easeOut">Ease out (slow end)</enumerationValue>
+                        <enumerationValue key="linear">Linear (same speed from start to end)</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="content" type="widgets" required="false">
+                    <caption>Content</caption>
+                    <description>Content that should auto animate on content changes</description>
+                </property>
+            </propertyGroup>
         </propertyGroup>
     </properties>
 </widget>
