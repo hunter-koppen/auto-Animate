@@ -27,9 +27,9 @@ export class AnimationContainer extends Component {
     }
 
     setupAnimations() {
-        const { enabledAnimations, animationTiming, duration, shouldAnimateOnLoad } = this.props;
+        const { enabledAnimations, shouldAnimateOnLoad } = this.props;
         const element = this.parentRef.current;
-
+        debugger;
         if (!element) return;
 
         // Make sure to only execute logic when we have a value for enabledAnimations (not undefined)
@@ -40,33 +40,13 @@ export class AnimationContainer extends Component {
         }
 
         if (enabledAnimations === true) {
-            if (this.state.loaded || shouldAnimateOnLoad) {
-                let easing;
-                switch (animationTiming) {
-                    case "easeInOut":
-                        easing = "ease-in-out";
-                        break;
-                    case "easeIn":
-                        easing = "ease-in";
-                        break;
-                    case "easeOut":
-                        easing = "ease-out";
-                        break;
-                    case "linear":
-                        easing = "linear";
-                        break;
-                    default:
-                        easing = "ease-in-out";
-                }
+            if (this.state.loaded) {
+                // need a slight timeout here to make sure the initial rendering has finished.
+                setTimeout(this.enableAnimation, 100);
+            }
 
-                if (!this.animationController) {
-                    this.animationController = autoAnimate(element, {
-                        duration,
-                        easing
-                    });
-                } else {
-                    this.animationController.enable();
-                }
+            if (shouldAnimateOnLoad) {
+                this.enableAnimation();
             }
 
             if (!this.state.loaded) {
@@ -74,6 +54,38 @@ export class AnimationContainer extends Component {
             }
         }
     }
+
+    enableAnimation = () => {
+        const { animationTiming, duration } = this.props;
+        const element = this.parentRef.current;
+
+        let easing;
+        switch (animationTiming) {
+            case "easeInOut":
+                easing = "ease-in-out";
+                break;
+            case "easeIn":
+                easing = "ease-in";
+                break;
+            case "easeOut":
+                easing = "ease-out";
+                break;
+            case "linear":
+                easing = "linear";
+                break;
+            default:
+                easing = "ease-in-out";
+        }
+
+        if (!this.animationController) {
+            this.animationController = autoAnimate(element, {
+                duration,
+                easing
+            });
+        } else {
+            this.animationController.enable();
+        }
+    };
 
     removeAnimations() {
         if (this.animationController) {
