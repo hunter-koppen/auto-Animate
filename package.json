@@ -28,6 +28,7 @@
     "@mendix/pluggable-widgets-tools": "^9.24.0"
   },
   "dependencies": {
+    "@formkit/auto-animate": "^0.7.0",
     "classnames": "^2.2.6"
   },
   "resolutions": {
