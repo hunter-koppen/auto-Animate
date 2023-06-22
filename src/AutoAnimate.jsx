@@ -10,6 +10,7 @@ export class AutoAnimate extends Component {
                 duration={this.props.duration}
                 animationTiming={this.props.animationTiming}
                 enabledAnimations={this.props.enabledAnimations.value}
+                shouldAnimateOnLoad={this.props.shouldAnimateOnLoad}
             />
         );
     }

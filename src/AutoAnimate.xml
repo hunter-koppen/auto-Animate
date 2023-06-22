@@ -12,6 +12,10 @@
                     <description>Sometimes you might want to disable the animation (maybe temporary) then you can set this to false.</description>
                     <returnType type="Boolean" />
                 </property>
+                <property key="shouldAnimateOnLoad" type="boolean" defaultValue="true">
+                    <caption>Animate initial load</caption>
+                    <description>If set to true it will also animate the first loading of the content</description>
+                </property>
             </propertyGroup>
             <propertyGroup caption="Duration">
                 <property key="duration" type="integer" defaultValue="250">
