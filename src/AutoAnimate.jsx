@@ -9,6 +9,7 @@ export class AutoAnimate extends Component {
                 content={this.props.content}
                 duration={this.props.duration}
                 animationTiming={this.props.animationTiming}
+                enabledAnimations={this.props.enabledAnimations.value}
             />
         );
     }

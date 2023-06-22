@@ -6,6 +6,13 @@
     <description/>
     <properties>
         <propertyGroup caption="Settings">
+            <propertyGroup caption="Loading">
+                <property key="enabledAnimations" type="expression" defaultValue="true" required="true">
+                    <caption>Enabled?</caption>
+                    <description>Sometimes you might want to disable the animation (maybe temporary) then you can set this to false.</description>
+                    <returnType type="Boolean" />
+                </property>
+            </propertyGroup>
             <propertyGroup caption="Duration">
                 <property key="duration" type="integer" defaultValue="250">
                     <caption>Duration</caption>
