@@ -29,7 +29,7 @@ export class AnimationContainer extends Component {
     setupAnimations() {
         const { enabledAnimations, shouldAnimateOnLoad } = this.props;
         const element = this.parentRef.current;
-        debugger;
+
         if (!element) return;
 
         // Make sure to only execute logic when we have a value for enabledAnimations (not undefined)
@@ -95,12 +95,12 @@ export class AnimationContainer extends Component {
     }
 
     render() {
-        const { content } = this.props;
+        const { content, classNames } = this.props;
         const { loaded } = this.state;
         // we only load the content once we have done the initial loading because then we have had time to apply the animations before loading the content if nessecary
 
         return (
-            <div ref={this.parentRef} className="widget-auto-animate">
+            <div ref={this.parentRef} className={"widget-auto-animate " + classNames}>
                 {loaded && content}
             </div>
         );

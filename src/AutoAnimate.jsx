@@ -6,6 +6,7 @@ export class AutoAnimate extends Component {
     render() {
         return (
             <AnimationContainer
+                classNames={this.props.class}
                 content={this.props.content}
                 duration={this.props.duration}
                 animationTiming={this.props.animationTiming}
