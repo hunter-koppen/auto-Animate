@@ -13,12 +13,22 @@ export class AnimationContainer extends Component {
     };
 
     componentDidMount() {
-        this.setupAnimations();
+        if (this.props.enabledAnimations) {
+            if (this.props.animationBase === "querySelector") {
+                this.setupAnimationsSelector();
+            } else {
+                this.setupAnimationsContent();
+            }
+        }
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.enabledAnimations !== this.props.enabledAnimations || prevState.loaded !== this.state.loaded) {
-            this.setupAnimations();
+            if (this.props.animationBase === "querySelector") {
+                this.setupAnimationsSelector();
+            } else {
+                this.setupAnimationsContent();
+            }
         }
     }
 
@@ -26,7 +36,7 @@ export class AnimationContainer extends Component {
         this.removeAnimations();
     }
 
-    setupAnimations() {
+    setupAnimationsContent() {
         const { enabledAnimations, shouldAnimateOnLoad } = this.props;
         const element = this.parentRef.current;
 
@@ -42,11 +52,11 @@ export class AnimationContainer extends Component {
         if (enabledAnimations === true) {
             if (this.state.loaded) {
                 // need a slight timeout here to make sure the initial rendering has finished.
-                setTimeout(this.enableAnimation, 100);
+                setTimeout(this.enableAnimation(element), 100);
             }
 
             if (shouldAnimateOnLoad) {
-                this.enableAnimation();
+                this.enableAnimation(element);
             }
 
             if (!this.state.loaded) {
@@ -55,27 +65,46 @@ export class AnimationContainer extends Component {
         }
     }
 
-    enableAnimation = () => {
-        const { animationTiming, duration } = this.props;
-        const element = this.parentRef.current;
+    setupAnimationsSelector() {
+        const { enabledAnimations, querySelector } = this.props;
+        if (!this.state.loaded) {
+            this.setState({ loaded: true });
+        } else {
+            // Use an interval to keep checking for the element until we find it for atleast 2 seconds.
+            let elapsedTime = 0;
+            const interval = setInterval(() => {
+                const element = this.parentRef.current?.querySelector(querySelector);
 
-        let easing;
-        switch (animationTiming) {
-            case "easeInOut":
-                easing = "ease-in-out";
-                break;
-            case "easeIn":
-                easing = "ease-in";
-                break;
-            case "easeOut":
-                easing = "ease-out";
-                break;
-            case "linear":
-                easing = "linear";
-                break;
-            default:
-                easing = "ease-in-out";
+                if (element) {
+                    if (enabledAnimations === false) {
+                        this.removeAnimations();
+                        this.setState({ loaded: true });
+                    }
+
+                    if (enabledAnimations === true) {
+                        this.enableAnimation(element);
+                    }
+                    clearInterval(interval);
+                } else {
+                    elapsedTime += 100;
+                    if (elapsedTime >= 2000) {
+                        clearInterval(interval);
+                    }
+                }
+            }, 100);
         }
+    }
+
+    enableAnimation = element => {
+        const { animationFlow, duration } = this.props;
+
+        const easing =
+            {
+                easeInOut: "ease-in-out",
+                easeIn: "ease-in",
+                easeOut: "ease-out",
+                linear: "linear"
+            }[animationFlow] || "ease-in-out";
 
         if (!this.animationController) {
             this.animationController = autoAnimate(element, {
@@ -87,12 +116,12 @@ export class AnimationContainer extends Component {
         }
     };
 
-    removeAnimations() {
+    removeAnimations = () => {
         if (this.animationController) {
             this.animationController.disable(); // Disable animations
             this.animationController = null; // Reset the animation controller
         }
-    }
+    };
 
     render() {
         const { content, classNames } = this.props;

@@ -6,37 +6,49 @@
     <description/>
     <properties>
         <propertyGroup caption="Settings">
-            <propertyGroup caption="Loading">
+            <propertyGroup caption="Enabled">
                 <property key="enabledAnimations" type="expression" defaultValue="true" required="true">
                     <caption>Enabled?</caption>
                     <description>Sometimes you might want to disable the animation (maybe temporary) then you can set this to false.</description>
                     <returnType type="Boolean" />
                 </property>
+            </propertyGroup>
+            <propertyGroup caption="What to animate?">
+                <property key="animationBase" type="enumeration" defaultValue="content">
+                    <caption>Animation base</caption>
+                    <description>What element would you like to use as the base of the animation? This means that all the direct children of the base will get animated. (see readme)</description>
+                    <enumerationValues>
+                        <enumerationValue key="content">This widget</enumerationValue>
+                        <enumerationValue key="querySelector">Custom query</enumerationValue>
+                    </enumerationValues>
+                </property>
+                <property key="querySelector" type="string" defaultValue="" required="false">
+                    <caption>Query selector</caption>
+                    <description>Enter a valid query selector here (for example ".animateThis"). Make sure the element you are trying to select is inside the content of the widget!</description>
+                </property>
                 <property key="shouldAnimateOnLoad" type="boolean" defaultValue="true">
                     <caption>Animate initial load</caption>
                     <description>If set to true it will also animate the first loading of the content</description>
                 </property>
+                <property key="content" type="widgets" required="false">
+                    <caption>Content</caption>
+                    <description>Content that should auto animate on content changes</description>
+                </property>
             </propertyGroup>
-            <propertyGroup caption="Duration">
+            <propertyGroup caption="Timing">
                 <property key="duration" type="integer" defaultValue="250">
                     <caption>Duration</caption>
                     <description>Animation duration in milliseconds</description>
                 </property>
-            </propertyGroup>
-            <propertyGroup caption="Timing">
-                <property key="animationTiming" type="enumeration" defaultValue="easeInOut">
-                    <caption>Animation Timing</caption>
-                    <description>How would like the timing of the animation to take place?</description>
+                <property key="animationFlow" type="enumeration" defaultValue="easeInOut">
+                    <caption>Animation flow</caption>
+                    <description/>
                     <enumerationValues>
-                        <enumerationValue key="easeInOut">Ease in-out (Slow start and slow end)</enumerationValue>
+                        <enumerationValue key="easeInOut">Ease in-out (slow start and slow end)</enumerationValue>
                         <enumerationValue key="easeIn">Ease in (slow start)</enumerationValue>
                         <enumerationValue key="easeOut">Ease out (slow end)</enumerationValue>
                         <enumerationValue key="linear">Linear (same speed from start to end)</enumerationValue>
                     </enumerationValues>
-                </property>
-                <property key="content" type="widgets" required="false">
-                    <caption>Content</caption>
-                    <description>Content that should auto animate on content changes</description>
                 </property>
             </propertyGroup>
         </propertyGroup>
