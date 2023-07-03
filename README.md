@@ -34,3 +34,6 @@ Gallery widget  : ".yourclass>.widget-gallery-items"
 
 ## Issues, suggestions and feature requests
 https://github.com/hunter-koppen/auto-Animate/issues
+
+![listviewanimation](https://github.com/hunter-koppen/auto-Animate/assets/75416593/ab13f5b2-892d-47b2-a6d9-11911aff8c16)
+
