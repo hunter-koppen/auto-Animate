@@ -1,33 +1,36 @@
 ## Auto Animate
+Simplified Animation for Widgets
 
-The Auto Animate widget adds automatic animations to any *direct content* (immediate children) you load inside the widget.
+The Auto Animate widget provides automatic animations for any content you load directly into the widget. It offers several features to customize and control the animations.
 
-## Features
-
--   Automatically animate the adding/removing or moving of *direct content* inside the widget
--   Add animation to an element based on a custom query
--   Determine the duration & flow of the animation
--   Enabled/Disable the animation based on your own logic
+## Key Features:
+- Automatically animate the addition, removal, or movement of content within the widget.
+- Apply animation to specific elements using custom queries.
+- Adjust the duration and flow of the animation.
+- Enable or disable animations based on your own logic.
 
 ## Usage
+1. Add the Auto Animate widget to your page.
+2. Place the desired content inside the widget.
+3. Whenever there are changes to the *direct content*, the widget will automatically animate it. For example, you can swap content based on visibility, and it will be animated accordingly.
 
-Simply add the widget to a page and place content inside it. Whenever the direct content changes it will automatically animate
-it. You can for example swap some content based on visibility which will then be animated. 
+You can also use a custom query selector to select a different element as the basis for the animation. Ensure that the selected element is within the widget's content.
 
-You can also use a custom query selector to select a different element to be the base of the animation. If you use this option make sure the element you are trying to select is inside the content of the widget.
+For more examples and demonstrations, please refer to the examples page in the demo app.
 
-See the examples page in the demo app.
+## Understanding Direct Content:
+Only the direct children of the widget trigger animations. For instance, if you place a container directly inside the widget and control its visibility, the container will animate. However, if you add a container and place a button inside it, and you hide the button, it will not animate because the button is not a direct child.
 
-## What do I mean with direct content?
+If you want to animate multiple elements within the Auto Animate widget, you can simply add another Auto Animate widget inside the existing one.
 
-Only the base of the animation will trigger an animation change, so for example you can place a container directly inside the widget and based on some visibility show that container, it will then animate. But if you for example add a container and then a button inside it, and you put the visibility on the button it will not animate because its not a direct child.
+## Example: Using Custom Queries
+One useful application of this widget is animating sorting changes in lists. To achieve this, you need to use a query selector. Here's a quick setup guide for the most commonly used widgets:
 
-So what if I want to animate multiple things inside the Auto Animate widget? Well simple, just put another Auto Animate widget inside the already existing Auto Animate widget.
+1. First add your own class to the list widget you wish to use, in the examples below I will be using .yourclass.
+2. Add the following custom query to widget you are using:
 
-## Example custom queries:
-For any of the examples below make sure to also add your own custom class in front of the query selector so that it find the correct element.
-Listviews       : ".yourclass .mx-list"
-Gallery widget  : ".yourclass .widget-gallery-items"
+Listviews       : ".yourclass>ul"
+Gallery widget  : ".yourclass>.widget-gallery-items"
 
 ## Issues, suggestions and feature requests
 https://github.com/hunter-koppen/auto-Animate/issues
