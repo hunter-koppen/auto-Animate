@@ -52,14 +52,13 @@ export class AnimationContainer extends Component {
         if (enabledAnimations === true) {
             if (this.state.loaded) {
                 // need a slight timeout here to make sure the initial rendering has finished.
-                setTimeout(this.enableAnimation(element), 100);
-            }
-
-            if (shouldAnimateOnLoad) {
-                this.enableAnimation(element);
-            }
-
-            if (!this.state.loaded) {
+                setTimeout(() => {
+                    this.enableAnimation(element);
+                }, 200);
+            } else {
+                if (shouldAnimateOnLoad) {
+                    this.enableAnimation(element);
+                }
                 this.setState({ loaded: true });
             }
         }
