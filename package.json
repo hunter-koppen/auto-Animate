@@ -1,7 +1,7 @@
 {
   "name": "autoanimate",
   "widgetName": "AutoAnimate",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "My widget description",
   "copyright": "Kobeon BV 2023",
   "author": "Hunter Koppen",
@@ -28,7 +28,7 @@
     "@mendix/pluggable-widgets-tools": "^9.24.0"
   },
   "dependencies": {
-    "@formkit/auto-animate": "^0.7.0",
+    "@formkit/auto-animate": "^0.8.1",
     "classnames": "^2.2.6"
   },
   "resolutions": {
