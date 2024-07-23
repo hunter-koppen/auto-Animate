@@ -26,7 +26,7 @@
                     <caption>Query selector</caption>
                     <description>Enter a valid query selector here (for example ".animateThis"). Make sure the element you are trying to select is inside the content of the widget!</description>
                 </property>
-                <property key="shouldAnimateOnLoad" type="boolean" defaultValue="true">
+                <property key="shouldAnimateOnLoad" type="boolean" defaultValue="false">
                     <caption>Animate initial load</caption>
                     <description>If set to true it will also animate the first loading of the content</description>
                 </property>
